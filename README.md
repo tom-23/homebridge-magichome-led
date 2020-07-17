@@ -1,3 +1,27 @@
 # A better homebridge plugin for the MagicHome LED Controller
 
-Currently developing this, check back later!
+cus, why not?
+
+## The aims of this project:
+- Use of the NodeJS port of flux_led.py to keep everything in JS
+- Address some bugs when switching scenes in the Home app
+- Easy device descovery using the library
+
+## Installation
+`npm install -g homebridge-magichome-led`
+
+And add this to your ``config.json``:
+```json
+"platforms": [
+    {
+      "platform" : "MagicHomeLED"
+    }
+  ]
+```
+
+Devices should autodetect and appear in the home app with their mac address and model number. You can rename thease using the home app.
+
+## Todo
+
+- [ ] Clean up
+- [ ] RGBW and RGBWW device support

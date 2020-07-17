@@ -1,9 +1,9 @@
 {
   "private": true,
-  "displayName": "Plugin Name",
-  "name": "homebridge-plugin-name",
+  "displayName": "MagichomeLED",
+  "name": "homebridge-magichome-led",
   "version": "1.0.0",
-  "description": "A short description about what your plugin does.",
+  "description": "A better way of controlling your magichome led devices",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -26,7 +26,10 @@
   "keywords": [
     "homebridge-plugin"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "color-convert": "^2.0.1",
+    "magic-home": "^2.5.0"
+  },
   "devDependencies": {
     "@types/node": "^14.0.14",
     "@typescript-eslint/eslint-plugin": "^3.4.0",
