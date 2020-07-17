@@ -1,7 +1,7 @@
 {
   "displayName": "MagichomeLED",
   "name": "homebridge-magichome-led",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A better way of controlling your magichome led devices",
   "license": "Apache-2.0",
   "repository": {
