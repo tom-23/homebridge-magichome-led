@@ -21,6 +21,25 @@ And add this to your ``config.json``:
 
 Devices should autodetect and appear in the home app with their mac address and model number. You can rename thease using the home app.
 
+## Manual Config
+Sometimes, there can be an issue with detecting devices. You can define devices too in the config.json file:
+
+```json
+"platforms": [
+    {
+      "platform" : "MagicHomeLED"
+      "discover": false,
+      "devices": [
+        {
+          "address" : "192.168.X.XXX",
+          "id": "MAC_ADDRESS",
+          "model": "XXXXXXXX"
+        }
+      ]
+    }
+  ]
+```
+
 ## Todo
 
 - [ ] Clean up
