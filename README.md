@@ -27,7 +27,7 @@ Sometimes, there can be an issue with detecting devices. You can define devices 
 ```json
 "platforms": [
     {
-      "platform" : "MagicHomeLED"
+      "platform" : "MagicHomeLED",
       "discover": false,
       "devices": [
         {
