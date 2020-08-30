@@ -12,7 +12,7 @@ export class ColorLight {
   private service: Service;
   private light: Control;
   
-
+  private polling = false;
   /**
    * These are just used to create a working example
    * You should implement your own code to track the state of your accessory
@@ -77,6 +77,26 @@ export class ColorLight {
 
   }
 
+  queryState() {
+    this.platform.log.debug("Polling accessory...");
+    this.polling = true;
+    this.light.queryState().then(state => {
+      this.platform.log.debug("Retrived States!");
+      this.states.On = state.on;
+      const colVals = convert.rgb.hsv(state.color.red, state.color.green, state.color.blue);
+      this.states.Brightness = colVals[2];
+      this.states.Hue = colVals[0];
+      this.states.Saturation = colVals[1];
+      this.service.updateCharacteristic(this.platform.Characteristic.On, this.states.On);
+      this.service.updateCharacteristic(this.platform.Characteristic.Brightness, this.states.Brightness);
+      this.service.updateCharacteristic(this.platform.Characteristic.Saturation, this.states.Saturation);
+      this.service.updateCharacteristic(this.platform.Characteristic.Hue, this.states.Hue);
+      this.polling = false;
+    }).catch(err => {
+      return this.platform.log.error('Error:', err.message);
+    });
+  }
+
   setOn(value: CharacteristicValue, callback: CharacteristicSetCallback) {
 
     // implement your own code to turn your device on/off
@@ -100,15 +120,14 @@ export class ColorLight {
 
   getOn(callback: CharacteristicGetCallback) {
 
-    this.light.queryState().then(state => {
-      this.platform.log.debug('Get Characteristic On ->', state.on);
-      this.states.On = state.on;
-      callback(null, state.on);
-    }).catch(err => {
+      this.queryState();
+
+      this.platform.log.debug('Get Characteristic On ->', this.states.On);
       callback(null, this.states.On);
-      // eslint-disable-next-line no-console
-      return console.log('Error:', err.message);
-    });
+      
+      
+      
+
   }
 
   setBrightness(value: CharacteristicValue, callback: CharacteristicSetCallback) {
@@ -136,16 +155,15 @@ export class ColorLight {
   }
 
   getBrightness(callback: CharacteristicSetCallback) {
-    this.light.queryState().then(state => {
-      const colVals = convert.rgb.hsv(state.color.red, state.color.green, state.color.blue);
-      this.platform.log.debug('Get Characteristic Brightness ->', colVals[2]);
-      this.states.Brightness = colVals[2];
-      callback(null, colVals[2]);
-    }).catch(err => {
-      callback(null, this.states.Brightness);
-      // eslint-disable-next-line no-console
-      return console.log('Error:', err.message);
-    });
+    if (this.polling == true) {
+
+    } else {
+      this.queryState();
+    }
+
+    this.platform.log.debug('Get Characteristic Brightness ->', this.states.Brightness);
+    callback(null, this.states.Brightness);
+    
   }
 
   setHue(value: CharacteristicValue, callback: CharacteristicSetCallback) {
@@ -172,16 +190,15 @@ export class ColorLight {
   }
 
   getHue(callback: CharacteristicSetCallback) {
-    this.light.queryState().then(state => {
-      const colVals = convert.rgb.hsv(state.color.red, state.color.green, state.color.blue);
-      this.platform.log.debug('Get Characteristic Hue ->', colVals[0]);
-      this.states.Hue = colVals[0];
-      callback(null, colVals[0]);
-    }).catch(err => {
-      callback(null, this.states.Hue);
-      // eslint-disable-next-line no-console
-      return console.log('Error:', err.message);
-    });
+    if (this.polling == true) {
+
+    } else {
+      this.queryState();
+    }
+
+    this.platform.log.debug('Get Characteristic Hue ->', this.states.Hue);
+    callback(null, this.states.Hue);
+    
   }
 
   setSaturation(value: CharacteristicValue, callback: CharacteristicSetCallback) {
@@ -208,16 +225,15 @@ export class ColorLight {
   }
 
   getSaturaton(callback: CharacteristicSetCallback) {
-    this.light.queryState().then(state => {
-      const colVals = convert.rgb.hsv(state.color.red, state.color.green, state.color.blue);
-      this.platform.log.debug('Get Characteristic Hue ->', colVals[1]);
-      this.states.Saturation = colVals[1];
-      callback(null, colVals[1]);
-    }).catch(err => {
-      callback(null, this.states.Saturation);
-      // eslint-disable-next-line no-console
-      return console.log('Error:', err.message);
-    });
+    if (this.polling == true) {
+
+    } else {
+      this.queryState();
+    }
+
+    this.platform.log.debug('Get Characteristic Saturation ->', this.states.Saturation);
+    callback(null, this.states.Saturation);
+    
   }
 
 
